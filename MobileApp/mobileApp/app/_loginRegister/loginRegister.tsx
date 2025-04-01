@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 import * as SecureStore from "expo-secure-store";
-import { Ionicons } from "@expo/vector-icons"; // for the dropdown chevron
+import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/lib/supabase";
 import { router } from "expo-router";
 import { useAppTheme } from "@/lib/ThemeProvider";

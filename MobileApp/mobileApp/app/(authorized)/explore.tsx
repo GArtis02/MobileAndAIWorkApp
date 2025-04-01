@@ -14,7 +14,6 @@ export default function App() {
   const [userMessage, setUserMessage] = useState("");
   const [vannaReply, setVannaReply] = useState(null);
 
-  // Fetch the reply from your backend
   const sendMessage = async () => {
     try {
       const response = await fetch("http://92.49.5.242:5001/chat", {
@@ -31,10 +30,8 @@ export default function App() {
     }
   };
 
-  // Parse the vacancies: if it's an array of objects with keys, return it directly.
   const parseVacancies = () => {
     if (Array.isArray(vannaReply)) {
-      // Check if the first element is an object with keys
       if (
         vannaReply.length > 0 &&
         typeof vannaReply[0] === "object" &&
@@ -51,7 +48,6 @@ export default function App() {
 
   const vacancies = parseVacancies();
 
-  // Function to handle card press to open URL in default browser
   const openURL = (url) => {
     if (url) {
       Linking.openURL(url).catch((err) =>
