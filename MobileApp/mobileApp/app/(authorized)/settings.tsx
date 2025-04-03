@@ -42,7 +42,6 @@ export const CATEGORIES = [
 ];
 
 export default function SettingsScreen() {
-  // Added toggleTheme from the custom hook
   const { theme, toggleTheme } = useAppTheme();
   const themeColors = colors[theme];
 

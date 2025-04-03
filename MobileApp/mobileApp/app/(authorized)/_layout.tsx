@@ -7,6 +7,7 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import HomeScreen from "./index";
+import AllJobScreen from "./jobListings";
 import ProfileScreen from "./explore";
 import Settings from "./settings";
 import { signOut } from "../../lib/signOut";
@@ -47,7 +48,7 @@ export default function DrawerLayout() {
       }}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Job listings" component={ProfileScreen} />
+      <Drawer.Screen name="Job listings" component={AllJobScreen} />
       <Drawer.Screen name="Chat" component={ProfileScreen} />
       <Drawer.Screen name="Settings" component={Settings} />
     </Drawer.Navigator>

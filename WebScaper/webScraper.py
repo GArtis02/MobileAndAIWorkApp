@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -53,7 +53,7 @@ def extract_salary(text):
 
 def scrape_category(category_name, category_id, pages, cursor, db):
     for page in range(1, pages + 1):
-        url = f"https://www.visidarbi.lv/darba-sludinajumi?kategorija[]={category_id}&page={page}"
+        url = f"https://www.visidarbi.lv/darba-sludinajumi?sort=date_from&categories={category_id}&salaryFilters=id%3A2%2Cid%3A3%2Cid%3A4%2Cid%3A5&page={page}#results"
         headers = {'User-Agent': 'Mozilla/5.0'}
         soup = BeautifulSoup(requests.get(url, headers=headers).text, 'html.parser')
 
@@ -117,8 +117,6 @@ def start_scraping():
         password = password_entry.get()
         database = db_entry.get()
         pages = int(page_entry.get())
-        category_name = category_dropdown.get()
-        category_id = CATEGORIES[category_name]
 
         db = mysql.connector.connect(
             host=host,
@@ -128,13 +126,13 @@ def start_scraping():
         )
         cursor = db.cursor()
 
-        status_label.config(text=f"Scraping {category_name} ({pages} pages)...")
-        root.update()
-
-        scrape_category(category_name, category_id, pages, cursor, db)
-
+        # Loop through every category automatically
+        for category_name, category_id in CATEGORIES.items():
+            status_label.config(text=f"Scraping {category_name} ({pages} pages)...")
+            root.update()
+            scrape_category(category_name, category_id, pages, cursor, db)
         status_label.config(text="✅ Done! Data saved.")
-        messagebox.showinfo("Success", f"Scraped {pages} page(s) from {category_name} category.")
+        messagebox.showinfo("Success", f"Scraped {pages} page(s) from all categories.")
 
     except Exception as e:
         messagebox.showerror("Error", str(e))
@@ -164,15 +162,6 @@ for label_text, default in fields:
     entries.append(entry)
 
 host_entry, user_entry, password_entry, db_entry, page_entry = entries
-
-# Category dropdown
-category_frame = tk.Frame(root)
-category_frame.pack(padx=10, pady=5, fill="x")
-category_label = tk.Label(category_frame, text="Job Category", width=20, anchor='w')
-category_label.pack(side="left")
-category_dropdown = ttk.Combobox(category_frame, values=list(CATEGORIES.keys()), state="readonly")
-category_dropdown.current(0)
-category_dropdown.pack(side="right", expand=True, fill="x")
 
 start_btn = tk.Button(root, text="Start Scraping", command=start_scraping)
 start_btn.pack(pady=10)
