@@ -15,6 +15,8 @@ A Chat page with AI
 A Settings page for changing user settings and the app's theme
 
 [Flowchart (1)](./Flowchart%20(1).pdf)
+![Flowchart (1)](./Flowchart%20(1).png)
+
 
 ## Required extra packages for mobile app
 
